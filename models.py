@@ -4,10 +4,12 @@ from typing import List, Dict, Set
 
 class User:
     """some User model"""
+    ids = 0
 
-    def __init__(self, name: str, user_id: int):
+    def __init__(self, name: str):
+        User.ids += 1
         self.name = name
-        self.__user_id = user_id
+        self.__user_id = User.ids
         self.user_history: Set[User] = set()
         self.friend: Set[User] = set()
         # this may use forignkey on real implemenetation
@@ -22,6 +24,10 @@ class User:
     def is_payed(self, bill: 'Bill') -> bool:
         """return True if user payed the bill"""
         return self.bills[bill]
+
+    def __repr__(self):
+        return self.name
+    __str__ = __repr__
 
 
 class Bill:
@@ -50,6 +56,7 @@ class Bill:
 
     def __repr__(self) -> str:
         return f'{self.topic}| HEADER={self.header.name if self.header else None} | NEED_TO_PAY={list(self.need_to_pay)}'
+    __str__ = __repr__
 
 
 if __name__ == '__main__':
