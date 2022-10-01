@@ -1,14 +1,18 @@
 import datetime
-from typing import List, Dict
+from typing import List, Dict, Set
 
 
 class User:
+    """some User model"""
+
     def __init__(self, name: str, user_id: int):
         self.name = name
         self.__user_id = user_id
-        self.friend: List[User] = []
+        self.user_history: Set[User] = set()
+        self.friend: Set[User] = set()
         # this may use forignkey on real implemenetation
-        self.bills: Dict['Bill', bool] = {} # this is mapping between bill and amount
+        # this is mapping between bill and amount
+        self.bills: Dict['Bill', float] = {}
 
     @property
     def user_id(self):
@@ -21,14 +25,31 @@ class User:
 
 
 class Bill:
+    """Bill model"""
+
     def __init__(self, topic: str):
         self.topic = topic
-        self.pub_date = datetime.datetime.now()
+        self.__header: User = None
+        self.need_to_pay: Set[User] = set()
+        self.pub_date: datetime.datetime = datetime.datetime.now()
 
-    def assign(*users: User):
+    @property
+    def header(self) -> User:
+        return self.__header
+
+    @header.setter
+    def header(self, user: User):
+        if not isinstance(user, User):
+            raise TypeError("header must be a User instance")
+        self.__header = user
+
+    def assign(self, *users: User) -> None:
         """assign bill to users"""
         for user in users:
             user.bills[self] = False
+
+    def __repr__(self) -> str:
+        return f'{self.topic}| HEADER={self.header.name if self.header else None} | NEED_TO_PAY={list(self.need_to_pay)}'
 
 
 if __name__ == '__main__':
