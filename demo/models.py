@@ -3,33 +3,41 @@ from django.contrib import admin
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from typing import List
+
+
+class Bills(models.Model):
+    header = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    pub_date = models.DateTimeField(default=timezone.localtime)
 
 
 class Food(models.Model):
     """Topic model"""
     title = models.CharField(max_length=100)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     price = models.IntegerField("price")
+    bill = models.ForeignKey(Bills, on_delete=models.CASCADE)
+    user: List[User] = []
 
-class Bills(models.Model):
-    pass
+
+    def add_user(self, user):
+        self.user.append(user)
+
 
 class Payment(models.Model):
     """Entry model"""
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)
-    bill = models.ForeignKey(Bills, on_del)
+    bill = models.ForeignKey(Bills, on_delete=models.CASCADE)
 
     class Status_choice(models.TextChoices):
-        PAID = 'PAID', 'PAID'
+        PAID = 'PAID'
         UNPAID = 'UNPAID'
+        PENDING = 'PENDING'
 
-    image = models.ImageField(
+    status = models.CharField(
+        choices=Status_choice.choices,
+        default=Status_choice.UNPAID,
+        max_length=10)
 
-# field_name = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100, **options)
-# ImageField.upload_to
-
-    )
-
-
-
+    image = models.ImageField(upload_to='images/', blank=True)

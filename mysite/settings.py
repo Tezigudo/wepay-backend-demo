@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+from decouple import Csv, config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,17 +29,23 @@ SECRET_KEY = 'django-insecure-3@+jz=1*z621fn($m%f)v8-5#xn2!&537_0g59nv5flxj!8vqw
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+OMISE_PUBLIC_KEY = config('OMISE_PUBLIC_KEY', cast=str, default='NOKEY')
+OMISE_SECRET_KEY = config('OMISE_SECRET_KEY', cast=str, default='NOKEY')
+OMISE_LIVE_MODE = not True
+OMISE_CHARGE_RETURN_HOST = 'localhost:8000'
+OMISE_PAYMENT_METHODS = config('OMISE_PAYMENT_METHODS', cast=Csv(), default='credit_card')
 
 # Application definition
 
 INSTALLED_APPS = [
+    "demo.apps.DemoConfig",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_omise'
 ]
 
 MIDDLEWARE = [
@@ -54,7 +63,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -99,13 +108,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    # username/password authentication
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
 
