@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Bills, Food, Payment
+from .models import Bills, Food, BankPayment, CashPayment, PromptPayPayment
 
 class BillsAdmin(admin.ModelAdmin):
     list_display = ('header', 'name', 'pub_date')
@@ -8,9 +8,22 @@ class BillsAdmin(admin.ModelAdmin):
 class FoodAdmin(admin.ModelAdmin):
     list_display = ('title', 'price', 'bill')
 
-class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'date', 'bill', 'status', 'image')
+# class PaymentAdmin(admin.ModelAdmin):
+#     list_display = ('user', 'date', 'bill', 'status', 'image')
+
+class BankPaymentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'date', 'bill', 'status', 'image', 'bank', 'bank_account', 'name')
+
+
+class CashPaymentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'date', 'bill', 'status')
+
+class PromptPayPaymentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'date', 'bill', 'status', 'phone_number', 'name')
+
 
 admin.site.register(Bills, BillsAdmin)
 admin.site.register(Food, FoodAdmin)
-admin.site.register(Payment, PaymentAdmin)
+admin.site.register(BankPayment, BankPaymentAdmin)
+admin.site.register(CashPayment, CashPaymentAdmin)
+admin.site.register(PromptPayPayment, PromptPayPaymentAdmin)

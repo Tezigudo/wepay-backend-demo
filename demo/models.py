@@ -39,5 +39,21 @@ class Payment(models.Model):
         choices=Status_choice.choices,
         default=Status_choice.UNPAID,
         max_length=10)
-
     image = models.ImageField(upload_to='images/', blank=True)
+
+    class Meta:
+        abstract = True
+
+class BankPayment(Payment):
+    bank = models.CharField(max_length=100)
+    bank_account = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+
+
+class CashPayment(Payment):
+    image = models.NOT_PROVIDED
+
+
+class PromptPayPayment(Payment):
+    phone_number = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
