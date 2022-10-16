@@ -8,11 +8,8 @@ class BillsAdmin(admin.ModelAdmin):
 class FoodAdmin(admin.ModelAdmin):
     list_display = ('title', 'price', 'bill')
 
-# class PaymentAdmin(admin.ModelAdmin):
-#     list_display = ('user', 'date', 'bill', 'status', 'image')
-
 class BankPaymentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'date', 'bill', 'status', 'image', 'bank', 'bank_account', 'name')
+    list_display = ('user', 'date', 'bill', 'status', 'image', 'bank_name', 'bank_account', 'name')
 
 
 class CashPaymentAdmin(admin.ModelAdmin):

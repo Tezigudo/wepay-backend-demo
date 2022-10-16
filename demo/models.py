@@ -19,7 +19,6 @@ class Food(models.Model):
     bill = models.ForeignKey(Bills, on_delete=models.CASCADE)
     user: List[User] = []
 
-
     def add_user(self, user):
         self.user.append(user)
 
@@ -44,10 +43,24 @@ class Payment(models.Model):
     class Meta:
         abstract = True
 
+
 class BankPayment(Payment):
-    bank = models.CharField(max_length=100)
-    bank_account = models.CharField(max_length=100)
+    bank_account = models.CharField(max_length=10)
     name = models.CharField(max_length=100)
+    class Bank_choice(models.TextChoices):
+        KTB = 'KTB'
+        BBL = 'BBL'
+        SCB = 'SCB'
+        KRUNGTHAI = 'KRUNGTHAI'
+        TMB = 'TTB'
+        BAY = 'BAY'
+        REDCIT = 'CREDIT'
+        other = 'other'
+
+    bank_name = models.CharField(
+        choices=Bank_choice.choices,
+        default=Bank_choice.other,
+        max_length=10)
 
 
 class CashPayment(Payment):
@@ -55,5 +68,5 @@ class CashPayment(Payment):
 
 
 class PromptPayPayment(Payment):
-    phone_number = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=10)
     name = models.CharField(max_length=100)
