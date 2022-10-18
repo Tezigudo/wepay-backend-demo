@@ -1,6 +1,7 @@
 
 from django.contrib import admin
 from django.db import models
+from django_omise import models as omise_models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from typing import List
