@@ -57,7 +57,3 @@ class Bill:
     def __repr__(self) -> str:
         return f'{self.topic}| HEADER={self.header.name if self.header else None} | NEED_TO_PAY={list(self.need_to_pay)}'
     __str__ = __repr__
-
-
-if __name__ == '__main__':
-    pass

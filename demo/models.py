@@ -65,8 +65,7 @@ class BankPayment(Payment):
 
 
 class CashPayment(Payment):
-    image = models.NOT_PROVIDED
-
+    pass
 
 class PromptPayPayment(Payment):
     phone_number = models.CharField(max_length=10)
