@@ -30,3 +30,7 @@ class CheckoutView(LoginRequiredMixin, CheckoutMixin):
             # Create new order and attach a charge object
             # And handle form data
             handle_form_data(form.cleaned_data)
+
+
+def handler404(request, exception):
+    return render(request, '404.html', status=404)

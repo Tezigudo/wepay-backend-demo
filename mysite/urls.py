@@ -23,3 +23,5 @@ urlpatterns = [
 
 
 ]
+
+handler404 = 'demo.views.handler404'

@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3@+jz=1*z621fn($m%f)v8-5#xn2!&537_0g59nv5flxj!8vqw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 OMISE_PUBLIC_KEY = config('OMISE_PUBLIC_KEY', cast=str, default='NOKEY')
 OMISE_SECRET_KEY = config('OMISE_SECRET_KEY', cast=str, default='NOKEY')
 OMISE_LIVE_MODE = not True
